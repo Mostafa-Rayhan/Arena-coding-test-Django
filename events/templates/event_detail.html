@@ -1,0 +1,18 @@
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>{{ object.title }}</h1>
+  <p>{{ object.description }}</p>
+  <p>Date: {{ object.date }}</p>
+  <p>Time: {{ object.time }}</p>
+  <p>Location: {{ object.location_name }}</p>
+  <p>Available Slots: {{ object.available_slots }}</p>
+
+  {% if user.is_authenticated %}
+    <form method="post" action="{% url 'register_for_event' event_id=object.id %}">
+      {% csrf_token %}
+      <button type="submit">Register for Event</button>
+    </form>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Event List</h1>
+  
+  <form method="get" action="{% url 'event_list' %}">
+    <input type="text" name="q" placeholder="Search">
+    <button type="submit">Search</button>
+  </form>
+
+  {% for event in object_list %}
+    <div>
+      <h2><a href="{% url 'event_detail' pk=event.id %}">{{ event.title }}</a></h2>
+      <p>{{ event.description }}</p>
+      <p>Date: {{ event.date }}</p>
+      <p>Time: {{ event.time }}</p>
+      <p>Location: {{ event.location_name }}</p>
+      <p>Available Slots: {{ event.available_slots }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}

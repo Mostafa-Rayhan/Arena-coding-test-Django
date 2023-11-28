@@ -1,0 +1,19 @@
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>User Dashboard</h1>
+  {% if registrations %}
+    <h2>Your Registrations</h2>
+    <ul>
+      {% for registration in registrations %}
+        <li>
+          {{ registration.event.title }} - {{ registration.registration_date }}
+          <a href="{% url 'event_detail' pk=registration.event.id %}">View Details</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No registrations yet.</p>
+  {% endif %}
+{% endblock %}
