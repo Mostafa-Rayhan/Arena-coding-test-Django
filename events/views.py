@@ -6,6 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import Event, Registration
+from .serializers import EventSerializer, RegistrationSerializer
+
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
@@ -58,3 +63,25 @@ class CustomRegistrationView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'register.html'
     success_url = reverse_lazy('login')
+
+
+
+class EventListAPIView(generics.ListAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class EventDetailAPIView(generics.RetrieveAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class RegistrationCreateAPIView(generics.CreateAPIView):
+    queryset = Registration.objects.all()
+    serializer_class = RegistrationSerializer
+    permission_classes = [IsAuthenticated]
+
+class UserRegistrationsAPIView(generics.ListAPIView):
+    serializer_class = RegistrationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Registration.objects.filter(user=self.request.user)

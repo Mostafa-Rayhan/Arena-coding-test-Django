@@ -14,15 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# event_registration/urls.py
+
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('events/', include('events.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # Add built-in authentication views
-    path('accounts/', include('events.urls')),  # Add custom registration views
-    path('api/', include('events.api.urls')),
 ]
-
