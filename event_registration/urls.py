@@ -23,5 +23,6 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('accounts/', include('django.contrib.auth.urls')),  # Add built-in authentication views
     path('accounts/', include('events.urls')),  # Add custom registration views
+    path('api/', include('events.api.urls')),
 ]
 
