@@ -6,6 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 
+from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from .forms import CustomUserCreationForm
+
 class EventListView(generic.ListView):
     model = Event
     template_name = 'event_list.html'
@@ -40,3 +45,16 @@ def register_for_event(request, event_id):
 def user_dashboard(request):
     registrations = Registration.objects.filter(user=request.user)
     return render(request, 'user_dashboard.html', {'registrations': registrations})
+
+
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+
+class CustomLogoutView(LogoutView):
+    next_page = 'event_list'
+
+class CustomRegistrationView(CreateView):
+    form_class = CustomUserCreationForm
+    template_name = 'register.html'
+    success_url = reverse_lazy('login')
